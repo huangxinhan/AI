@@ -26,6 +26,7 @@ class Main extends Component {
             priority: null,
             allTasks: [],
             numOfTasks: 0,
+            generatedTasks: []
         }
     }
 
@@ -104,6 +105,18 @@ class Main extends Component {
         }
     }
 
+    generateSchedules = () => {
+        //first look at document.getElementByID("pythonOutput").value
+        //recreate the task objects 
+        //finally return <option> List to populate a drop down
+        //now set state to populate the generatedTasks array and refresh the react page
+    }
+
+    displayTask = () => {
+        //display the task based on this.state.generatedTasks[event.target.value]
+        //return a verticaltimelinelement live below
+    }
+
     generateTimeline = () => {
         var timeLine = []
         for (var i = 0; i < 10; i++) {
@@ -174,7 +187,7 @@ class Main extends Component {
                 <TextField id="pythonOutput" label="Standard" style={{ visibility: "hidden" }} />
                 <br></br>
                 <Button color="primary" id="generateSchedules" style={{ left: "720px" }}>Generate Schedules</Button>
-                <Button color="primary" id="DisplaySchedules" style={{ left: "850px" }} onClick={this.runPythonCode}>Display Schedule</Button>
+                <Button color="primary" id="DisplaySchedules" onClick={this.generateSchedules} style={{ left: "850px" }} >Load Schedules</Button>
 
                 <VerticalTimeline>
                     {this.generateTimeline()}
