@@ -29,6 +29,10 @@ class Main extends Component {
         }
     }
 
+    componentDidMount() {
+        document.body.style.backgroundColor = "rgb(237,237,237)"
+    }
+
 
     runPythonCode = () => {
         console.log(document.getElementById('textfield2').value)
@@ -42,35 +46,35 @@ class Main extends Component {
         console.log(date)
     };
 
-    handleTaskNameChange = (event, value) =>{
+    handleTaskNameChange = (event, value) => {
         this.setState({ taskName: event.target.value });
 
     }
-    
-    handletimeStartChange = (event, value) =>{
+
+    handletimeStartChange = (event, value) => {
         this.setState({ timeStart: event.target.value });
 
     }
 
-    handletimeEndChange = (event, value) =>{
+    handletimeEndChange = (event, value) => {
         this.setState({ timeEnd: event.target.value });
 
     }
 
-    handleDateChange = (event, value) =>{
+    handleDateChange = (event, value) => {
         this.setState({ date: event.target.value });
 
     }
 
-    handlePriorityChange = (event, value) =>{
+    handlePriorityChange = (event, value) => {
         this.setState({ priority: event.target.value });
 
     }
 
     clearAllTasks = () => {
-        this.setState({numOfTasks: 0});
-        this.setState({taskName: null, timeStart: null, timeEnd: null, date: null, priority: null})
-        this.setState({allTasks: []})
+        this.setState({ numOfTasks: 0 });
+        this.setState({ taskName: null, timeStart: null, timeEnd: null, date: null, priority: null })
+        this.setState({ allTasks: [] })
         alert("All tasks cleared!")
     }
 
@@ -83,14 +87,14 @@ class Main extends Component {
         var priority = this.state.priority;
         allcheck.push(taskName, timeStart, timeEnd, date, priority);
         var isPassed = true;
-        for (var  i = 0; i < allcheck.length; i++){
-            if (allcheck[i] == null){
+        for (var i = 0; i < allcheck.length; i++) {
+            if (allcheck[i] == null) {
                 alert("One or more values have not been inputted! Please make sure all inputs are properly filled before proceeding!")
                 isPassed = false;
                 break;
             }
         }
-        if(isPassed == true){
+        if (isPassed == true) {
             alert("current task successfully added to scheduler!");
             this.state.allTasks.push(allcheck);
             this.state.numOfTasks = this.state.numOfTasks + 1;
@@ -102,13 +106,13 @@ class Main extends Component {
 
     generateTimeline = () => {
         var timeLine = []
-        for (var i = 0; i < 1; i++) {
+        for (var i = 0; i < 10; i++) {
             let data = <VerticalTimelineElement
                 className="vertical-timeline-element--work"
-                contentStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
-                contentArrowStyle={{ borderRight: '7px solid  rgb(33, 150, 243)' }}
+                contentStyle={{ background: 'rgb(173,216,230)', color: '#000000' }}
+                contentArrowStyle={{ borderRight: '17px solid  rgb(173,216,230)' }}
                 date="2011 - present"
-                iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
+                iconStyle={{ background: 'rgb(173,216,230)', color: '#000000' }}
             >
                 <h3 className="vertical-timeline-element-title">Creative Director</h3>
                 <h4 className="vertical-timeline-element-subtitle">Miami, FL</h4>
@@ -133,43 +137,44 @@ class Main extends Component {
                 <h3>⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
                     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Task Name:</h3><TextField label="enter task name" id="taskName" onChange={this.handleTaskNameChange} style={{ left: "870px" }} />
                 <h3>⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-                    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Time Start:</h3>  <TextField id="timeStart" type="time" 
-                    InputLabelProps={{ shrink: true, }} inputProps={{ step: 300, }} style={{ left: "900px" }} onChange={this.handletimeStartChange}/>
+                    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Time Start:</h3>  <TextField id="timeStart" type="time"
+                    InputLabelProps={{ shrink: true, }} inputProps={{ step: 300, }} style={{ left: "900px" }} onChange={this.handletimeStartChange} />
                 <h3>⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-                    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Time End:</h3>  <TextField id="timeEnd" type="time" 
-                    InputLabelProps={{ shrink: true, }} inputProps={{ step: 300, }} style={{ left: "900px" }} onChange={this.handletimeEndChange}/>
+                    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Time End:</h3>  <TextField id="timeEnd" type="time"
+                    InputLabelProps={{ shrink: true, }} inputProps={{ step: 300, }} style={{ left: "900px" }} onChange={this.handletimeEndChange} />
                 <h3>⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
                     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Date:</h3><TextField id="date" label="Select Date" type="date" InputLabelProps={{ shrink: true, }} style={{ left: "875px" }} onChange={this.handleDateChange} />
                 <h3>⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
                     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Priority:</h3>
-                    <FormControl className="Form1" style={{left: "800px"}}>
-                      <InputLabel htmlFor="state-native-helper">Click</InputLabel>
-                        <NativeSelect id="priority"
-                          onChange={this.handlePriorityChange}
-                          inputProps={{
-                          name: 'Select a priority',
-                          id: 'state-native-helper',}}>
-                          <option aria-label="None" value="">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</option>
-                          <option value={1}>Low priority</option>
-                          <option value={2}>Regular priority</option>
-                          <option value={3}>High priority</option>
-                        </NativeSelect>
-                      <FormHelperText>Select compactness Type</FormHelperText>
-                    </FormControl>
+                <FormControl className="Form1" style={{ left: "800px" }}>
+                    <InputLabel htmlFor="state-native-helper">Click</InputLabel>
+                    <NativeSelect id="priority"
+                        onChange={this.handlePriorityChange}
+                        inputProps={{
+                            name: 'Select a priority',
+                            id: 'state-native-helper',
+                        }}>
+                        <option aria-label="None" value="">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</option>
+                        <option value={1}>Low priority</option>
+                        <option value={2}>Regular priority</option>
+                        <option value={3}>High priority</option>
+                    </NativeSelect>
+                    <FormHelperText>Select compactness Type</FormHelperText>
+                </FormControl>
                 <br></br><br></br>
-                <Button color="primary" id="addNew" onClick={this.addToScheduler} style={{left:"875px"}}>Add to Scheduler!</Button>
+                <Button color="primary" id="addNew" onClick={this.addToScheduler} style={{ left: "875px" }}>Add to Scheduler!</Button>
                 <br></br><br></br>
                 <h3>⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
                     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Number of tasks: {this.state.numOfTasks}</h3>
-                <Button color="primary" id="clearAll" onClick={this.clearAllTasks} style={{left:"875px"}}>Clear all tasks</Button>
+                <Button color="primary" id="clearAll" onClick={this.clearAllTasks} style={{ left: "875px" }}>Clear all tasks</Button>
 
 
 
                 <TextField id="pythonInput" label="Standard" style={{ visibility: "hidden" }} />
                 <TextField id="pythonOutput" label="Standard" style={{ visibility: "hidden" }} />
                 <br></br>
-                <Button color="primary" id="generateSchedules" style={{left:"720px"}}>Generate Schedules</Button>
-                <Button color="primary" id="DisplaySchedules" style={{left:"850px"}}  onClick={this.runPythonCode}>Display Schedule</Button>
+                <Button color="primary" id="generateSchedules" style={{ left: "720px" }}>Generate Schedules</Button>
+                <Button color="primary" id="DisplaySchedules" style={{ left: "850px" }} onClick={this.runPythonCode}>Display Schedule</Button>
 
                 <VerticalTimeline>
                     {this.generateTimeline()}
