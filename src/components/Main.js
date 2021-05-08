@@ -74,6 +74,11 @@ class Main extends Component {
     }
 
     clearAllTasks = () => {
+        document.getElementById("taskName").value = null;
+        document.getElementById("timeStart").value = null;
+        document.getElementById("timeEnd").value = null;
+        document.getElementById("date").value = null;
+        document.getElementById("state-native-helper priority").value = null;
         this.setState({ numOfTasks: 0 });
         this.setState({ taskName: null, timeStart: null, timeEnd: null, date: null, priority: null })
         this.setState({ allTasks: [] })
@@ -95,6 +100,10 @@ class Main extends Component {
                 isPassed = false;
                 break;
             }
+        }
+        if (timeStart!= null && timeEnd!= null && timeStart >= timeEnd){
+            alert("Invalid time range, please recheck the AMs and PMs");
+            isPassed = false;
         }
         if (isPassed == true) {
             alert("current task successfully added to scheduler!");
