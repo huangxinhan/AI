@@ -26,7 +26,8 @@ class Main extends Component {
             priority: null,
             allTasks: [],
             numOfTasks: 0,
-            generatedTasks: []
+            generatedTasks: [],
+            forceReset: null,
         }
     }
 
@@ -100,6 +101,7 @@ class Main extends Component {
             this.state.allTasks.push(allcheck);
             this.state.numOfTasks = this.state.numOfTasks + 1;
             //this.setState({taskName: null, timeStart: null, timeEnd: null, date: null, priority: null})
+            this.setState({forceReset: null})
             document.getElementById("pythonInput").value = this.state.allTasks  //putting this in a document so python can read it
             console.log(document.getElementById('pythonInput').value)
         }
