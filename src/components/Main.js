@@ -100,10 +100,15 @@ class Main extends Component {
             alert("current task successfully added to scheduler!");
             this.state.allTasks.push(allcheck);
             this.state.numOfTasks = this.state.numOfTasks + 1;
-            //this.setState({taskName: null, timeStart: null, timeEnd: null, date: null, priority: null})
-            this.setState({forceReset: null})
             document.getElementById("pythonInput").value = this.state.allTasks  //putting this in a document so python can read it
             console.log(document.getElementById('pythonInput').value)
+            document.getElementById("taskName").value = null;
+            document.getElementById("timeStart").value = null;
+            document.getElementById("timeEnd").value = null;
+            document.getElementById("date").value = null;
+            document.getElementById("state-native-helper priority").value = null;
+            this.setState({forceReset: null})
+            this.setState({taskName: null, timeStart: null, timeEnd: null, date: null, priority: null})
         }
     }
 
@@ -163,18 +168,18 @@ class Main extends Component {
                     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Priority:</h3>
                 <FormControl className="Form1" style={{ left: "800px" }}>
                     <InputLabel htmlFor="state-native-helper">Click</InputLabel>
-                    <NativeSelect id="priority"
+                    <NativeSelect 
                         onChange={this.handlePriorityChange}
                         inputProps={{
                             name: 'Select a priority',
-                            id: 'state-native-helper',
+                            id: 'state-native-helper priority',
                         }}>
                         <option aria-label="None" value="">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</option>
                         <option value={1}>Low priority</option>
                         <option value={2}>Regular priority</option>
                         <option value={3}>High priority</option>
                     </NativeSelect>
-                    <FormHelperText>Select compactness Type</FormHelperText>
+                    <FormHelperText>Priority</FormHelperText>
                 </FormControl>
                 <br></br><br></br>
                 <Button color="primary" id="addNew" onClick={this.addToScheduler} style={{ left: "875px" }}>Add to Scheduler!</Button>
