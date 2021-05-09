@@ -249,7 +249,6 @@ class Main extends Component {
     generateSchedules = () => {
         this.dfs();
         console.log(this.state.output);
-        this.objectiveFunction(this.state.output);
        // this.setState({generatedSchedules: []})
         for (var i = 0; i < this.state.output.length; i++){
             var generatedScheduleObject = {}
@@ -259,6 +258,7 @@ class Main extends Component {
             this.state.generatedSchedules.push(generatedScheduleObject);
         }
         this.clearAllActivities1();
+        this.objectiveFunction(this.state.generatedSchedules);
         console.log("generated schedules " +this.state.generatedSchedules)
         this.setState({forceReset: null})
     }
@@ -285,7 +285,7 @@ class Main extends Component {
     </NativeSelect>
     }
 
-    objectiveFunction = (output) => {
+    objectiveFunction = (generatedSchedules) => {
         //higher the objective function, further up the list ex. objective function score of 100 -> 1st rank
         //we need to sort this.state.generatedSchedules
     }
@@ -415,9 +415,9 @@ class Main extends Component {
                 <h3>⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
                     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Task Name:</h3><TextField label="enter task name" id="taskName" onChange={this.handleTaskNameChange} style={{ left: "870px" }} />
                 <h3>⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-                    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Uses Electricity:</h3><Checkbox 
+                    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Uses Electricity:</h3><Checkbox 
                     color="default"
-                    inputProps={{ 'aria-label': 'checkbox with default color' }} onClick = {this.handleChangeElectricity} style={{ left: "925px" }} />
+                    inputProps={{ 'aria-label': 'checkbox with default color' }} onClick = {this.handleChangeElectricity} style={{ left: "930px" }} />
                 <h3>⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
                     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Time Start:</h3>  <TextField id="timeStart" type="time"
                     InputLabelProps={{ shrink: true, }} inputProps={{ step: 300, }} style={{ left: "900px" }} onChange={this.handletimeStartChange} />
@@ -448,7 +448,7 @@ class Main extends Component {
                 <br></br><br></br>
                 <h3>⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
                     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Number of tasks: {this.state.numOfTasks}</h3>
-                <Button color="primary" id="clearAll" onClick={this.clearAllActivities} style={{ left: "875px" }}>Clear all tasks</Button>
+                <Button color="secondary" id="clearAll" onClick={this.clearAllActivities} style={{ left: "655px" }}>Clear all tasks (Must click clear all tasks before starting a new schedule!)</Button>
 
 
 
