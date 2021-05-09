@@ -264,7 +264,7 @@ class Main extends Component {
             <option aria-label="None" value="">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</option>
         {totalOptions.map((schedules, id) => {
             return(
-            <option value={id}>{"Schedule Number " + id}</option>)
+            <option value={id}>{"Schedule Number " + (id+1)}</option>)
         })}
     </NativeSelect>
     }
