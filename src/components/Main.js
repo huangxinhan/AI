@@ -33,6 +33,7 @@ class Main extends Component {
             numOfTasks: 0,
             generatedSchedules: [],
             forceReset: null,
+            timeLineComponents: null
         }
     }
 
@@ -344,31 +345,39 @@ class Main extends Component {
     }
 
     displayTask = () => {
-        //display the task based on this.state.generatedSchedules[event.target.value]
-        //return a verticaltimelinelement live below
+        return this.state.timeLineComponents;
     }
 
 
 
-    generateTimeline = () => {
+    generateTimeline = (event, value) => {
+        var id = event.target.value;
+        console.log("id" + event.target.value)
+        var schedule = null;
+        for (var i = 0; i < this.state.generatedSchedules.length; i++){
+            console.log("generatedSchedules.id" + this.state.generatedSchedules[i].id)
+            if (this.state.generatedSchedules[i].id == id){
+                schedule = this.state.generatedSchedules[i];
+            }
+        }
         var timeLine = []
-        for (var i = 0; i < 10; i++) {
+        for (var i = 0; i < schedule.schedule.length; i++) {
             let data = <VerticalTimelineElement
                 className="vertical-timeline-element--work"
                 contentStyle={{ background: 'rgb(173,216,230)', color: '#000000' }}
                 contentArrowStyle={{ borderRight: '17px solid  rgb(173,216,230)' }}
-                date="2011 - present"
+                date={schedule.schedule[i].date}
                 iconStyle={{ background: 'rgb(173,216,230)', color: '#000000' }}
             >
-                <h3 className="vertical-timeline-element-title">Creative Director</h3>
-                <h4 className="vertical-timeline-element-subtitle">Miami, FL</h4>
+                <h3 className="vertical-timeline-element-title">{schedule.schedule[i].taskName}</h3>
+                <h4 className="vertical-timeline-element-subtitle">{schedule.schedule[i].date}</h4>
                 <p>
-                    Creative Direction, User Experience, Visual Design, Project Management, Team Leading
+                    time: {schedule.schedule[i].timeStart} - {schedule.schedule[i].timeEnd}
             </p>
             </VerticalTimelineElement>
             timeLine.push(data);
         }
-        return timeLine
+        this.setState({timeLineComponents: timeLine});
     }
 
     render() {
@@ -435,7 +444,7 @@ class Main extends Component {
                 </FormControl>
 
                 <VerticalTimeline>
-                    {this.generateTimeline()}
+                    {this.displayTask()}
                 </VerticalTimeline>
             </div>
         )
