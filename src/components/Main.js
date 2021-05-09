@@ -31,7 +31,7 @@ class Main extends Component {
             final: [],
             output: [],
             numOfTasks: 0,
-            generatedTasks: [],
+            generatedSchedules: [],
             forceReset: null,
         }
     }
@@ -238,13 +238,40 @@ class Main extends Component {
         this.dfs();
         console.log(this.state.output);
         this.objectiveFunction(this.state.output);
+        for (var i = 0; i < this.state.output.length; i++){
+            var generatedScheduleObject = {}
+            generatedScheduleObject.schedule = this.state.output[i];
+            generatedScheduleObject.id = i;
+            generatedScheduleObject.objectiveFunctionScore = 0;
+            this.state.generatedSchedules.push(generatedScheduleObject);
+        }
         this.clearAllActivities();
+        this.setState({forceReset: null})
+    }
 
+    getScheduleContent = () => {
+        var totalOptions =  [];
+        for (var i = 0; i < this.state.generatedSchedules.length; i++){
+            totalOptions.push(i)
+        }
+        console.log(totalOptions);
+        return                     <NativeSelect
+        onChange={this.generateTimeline}
+        inputProps={{
+            name: 'Select Schedule',
+            id: 'state-native-helper schedule',
+        }}>
+            <option aria-label="None" value="">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</option>
+        {totalOptions.map((schedules, id) => {
+            return(
+            <option value={id}>{"Schedule Number " + id}</option>)
+        })}
+    </NativeSelect>
     }
 
     objectiveFunction = (output) => {
         //higher the objective function, further up the list ex. objective function score of 100 -> 1st rank
-        
+        //we need to sort this.state.generatedSchedules
     }
 
     is_a_solution = () => {
@@ -317,7 +344,7 @@ class Main extends Component {
     }
 
     displayTask = () => {
-        //display the task based on this.state.generatedTasks[event.target.value]
+        //display the task based on this.state.generatedSchedules[event.target.value]
         //return a verticaltimelinelement live below
     }
 
@@ -397,7 +424,15 @@ class Main extends Component {
                 <TextField id="pythonOutput" label="Standard" style={{ visibility: "hidden" }} />
                 <br></br>
                 <Button color="primary" id="generateSchedules" onClick={this.generateSchedules} style={{ left: "860px" }}>Generate Schedules</Button>
+                <br></br>
 
+                <h3>⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+                    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Check Schedule:</h3>
+                <FormControl className="Form1" style={{ left: "800px" }}>
+                    <InputLabel htmlFor="state-native-helper">Click</InputLabel>
+                        {this.getScheduleContent()}
+                    <FormHelperText>Schedule</FormHelperText>
+                </FormControl>
 
                 <VerticalTimeline>
                     {this.generateTimeline()}
