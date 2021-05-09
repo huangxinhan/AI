@@ -90,10 +90,21 @@ class Main extends Component {
         document.getElementById("state-native-helper priority").value = null;
         this.setState({ numOfTasks: 0 });
         this.setState({ taskName: null, timeStart: null, timeEnd: null, date: null, priority: null })
-        this.setState({ activities: [], plans: [], final: [], output: [] })
+        this.setState({ activities: [], plans: [], final: [], output: [], generatedSchedules: []})
         //alert("All tasks cleared!")
     }
 
+    clearAllActivities1 = () => {
+        document.getElementById("taskName").value = null;
+        document.getElementById("timeStart").value = null;
+        document.getElementById("timeEnd").value = null;
+        document.getElementById("date").value = null;
+        document.getElementById("state-native-helper priority").value = null;
+        this.setState({ numOfTasks: 0 });
+        this.setState({ taskName: null, timeStart: null, timeEnd: null, date: null, priority: null })
+        this.setState({ activities: [], plans: [], final: [], output: []})
+        //alert("All tasks cleared!")
+    }
     addToScheduler = () => {
         var allcheck = [];
         var taskName = this.state.taskName;
@@ -239,6 +250,7 @@ class Main extends Component {
         this.dfs();
         console.log(this.state.output);
         this.objectiveFunction(this.state.output);
+       // this.setState({generatedSchedules: []})
         for (var i = 0; i < this.state.output.length; i++){
             var generatedScheduleObject = {}
             generatedScheduleObject.schedule = this.state.output[i];
@@ -246,12 +258,15 @@ class Main extends Component {
             generatedScheduleObject.objectiveFunctionScore = 0;
             this.state.generatedSchedules.push(generatedScheduleObject);
         }
-        this.clearAllActivities();
+        this.clearAllActivities1();
+        console.log("generated schedules " +this.state.generatedSchedules)
         this.setState({forceReset: null})
     }
 
     getScheduleContent = () => {
+        
         var totalOptions =  [];
+        console.log("generated schedules " +this.state.generatedSchedules)
         for (var i = 0; i < this.state.generatedSchedules.length; i++){
             totalOptions.push(i)
         }
@@ -361,6 +376,14 @@ class Main extends Component {
             }
         }
         var timeLine = []
+        //first sort by date
+        schedule.schedule.sort(function(a,b) {
+            return parseInt(a.date) - parseInt(b.date)
+        })
+        //then sort by tiem
+        schedule.schedule.sort(function(a,b) {
+            return parseInt(a.timeEnd) - parseInt(b.timeEnd)
+        })
         for (var i = 0; i < schedule.schedule.length; i++) {
             let data = <VerticalTimelineElement
                 className="vertical-timeline-element--work"
