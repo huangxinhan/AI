@@ -26,12 +26,125 @@
     <div id="root"></div>
     <script type="text/python" id="script0">
       from browser import document, console, alert
+      import math
+      from Activity import *
       
-      def show(e):
-        console.log(document['pythonInput'].value)
-        document['pythonOutput'].value = document["pythonInput"].value
+      class ActivityOrganizer:
+
+          def __init__(self):
+              self.activities = []
+              self.plans = []
+              self.final = []
+              self.output = []
+          def add_activity(self,activity):
       
-      document['generateSchedules'].bind('click', show)
+              for a in self.activities:
+                  if (activity.start_time < a.start_time  and a.start_time < activity.end_time and a.date == activity.date) or (a.date == activity.date and a.start_time < activity.start_time and activity.start_time < a.end_time):
+                      a.conflict_with.append(activity.count)
+                      activity.conflict_with.append(a.count)
+      
+      
+              self.activities.append(activity)
+      
+      
+          def is_a_solution(self):
+              for plan in self.plans:
+                  bool  = False
+                  i = 0
+                  while bool != True and i < len(plan) :
+      
+                      activity = plan[i]
+                      if activity == 1:
+                          # print(self.activities[i].conflict_with)
+                          for conflict in self.activities[i].conflict_with:
+                              if plan[conflict] == 1:
+                                  bool = True
+                      i +=1
+      
+                  if bool == True:
+                      self.final.append(0)
+                  else:
+                      self.final.append(1)
+      
+              for i in range(1,len(self.final)):
+                  if self.final[i] == 1:
+                      a = []
+                      for j in range(0,len(self.plans[i])):
+                          if self.plans[i][j] == 1:
+                              a.append(self.activities[j])
+                      self.output.append(a)
+      
+      
+          def dfs(self):
+              for k in range(0, int(math.pow(2,math.ceil(len(self.activities))))):
+                  self.plans.append([])
+      
+              length_of_activieties = len(self.activities)
+              length_of_plans = len(self.plans)
+      
+              temp = 1
+              powcount = 1
+              for k in range(0,length_of_activieties):#0,1,2
+      
+                  for j in range(0,length_of_plans):#0,1,2,3,4,5,6,7
+      
+      
+                      if j % (len(self.plans)/int(math.pow(2,powcount))) == 0:
+                          temp = (temp+1)%2
+                          self.plans[j].append(temp)
+                      else:
+                          self.plans[j].append(temp)
+                  powcount = powcount +1
+      
+          def to_output(self):
+              opt = ""
+              for i in range(0,len(self.output)):
+                  group="{"
+                  for j in range(0,len(self.output[i])):
+                      group+= self.output[i][j].to_string()
+                  group+="}"
+                  opt +=group
+              return opt
+              
+          a = ActivityOrganizer()
+          b = Activity("owen1","Tuesday",910 ,1005,5,False)
+          c = Activity("owen2","Tuesday",1000,1130,5,False)
+          d = Activity("owen3","Tuesday",1100,1230,5,False)
+          e = Activity("owen4","Tuesday",2200,2359,5,False,)
+          a.add_activity(b)
+          a.add_activity(c)
+          a.add_activity(d)
+          a.add_activity(e)
+          console.log(b.conflict_with)
+          console.log(c.conflict_with)
+          console.log(d.conflict_with)
+          console.log(a.dfs())
+          console.log(a.plans)
+          a.is_a_solution()
+          console.log(a.to_output())
+
+         
+  </script>
+
+  <script type="text/python" id="script1">
+      from browser import document, console, alert 
+      import copy
+      COUNT = 0
+      class Activity:
+          def __init__(self, name:str, date:str, start:int, end:int, preference: int, assigned: bool):
+              self.name = name
+              self.date = date
+              self.start_time = start
+              self.end_time = end
+              self.preference_level = preference
+              self.assigned = assigned
+              self.conflict_with = []
+              global COUNT
+              self.count = COUNT
+              COUNT+=1
+      
+          def to_string(self):
+              return "" +self.name +","+ str(self.start_time)+","+str(self.end_time)+","+str(self.date) +","+ str(self.preference_level)+""
   </script>
   </body>
 </html>
