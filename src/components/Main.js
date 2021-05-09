@@ -33,7 +33,7 @@ class Main extends Component {
             numOfTasks: 0,
             generatedSchedules: [],
             forceReset: null,
-            timeLineComponents: null
+            timeLineComponents: null,
         }
     }
 
@@ -263,6 +263,11 @@ class Main extends Component {
         this.setState({forceReset: null})
     }
 
+    objectiveFunction = (generatedSchedules) => {
+        //higher the objective function, further up the list ex. objective function score of 100 -> 1st rank
+        //we need to sort this.state.generatedSchedules
+    }
+
     getScheduleContent = () => {
         
         var totalOptions =  [];
@@ -285,10 +290,6 @@ class Main extends Component {
     </NativeSelect>
     }
 
-    objectiveFunction = (generatedSchedules) => {
-        //higher the objective function, further up the list ex. objective function score of 100 -> 1st rank
-        //we need to sort this.state.generatedSchedules
-    }
 
     is_a_solution = () => {
         this.state.plans.forEach((plan) => {
@@ -376,14 +377,10 @@ class Main extends Component {
             }
         }
         var timeLine = []
-        //first sort by date
-        schedule.schedule.sort(function(a,b) {
-            return parseInt(a.date) - parseInt(b.date)
-        })
-        //then sort by tiem
-        schedule.schedule.sort(function(a,b) {
-            return parseInt(a.timeEnd) - parseInt(b.timeEnd)
-        })
+
+        //sort
+        schedule.schedule.sort((a,b) => (a.date + a.timeEnd > b.date + a.timeEnd) ? 1 : -1);
+        
         for (var i = 0; i < schedule.schedule.length; i++) {
             let data = <VerticalTimelineElement
                 className="vertical-timeline-element--work"
@@ -402,6 +399,7 @@ class Main extends Component {
         }
         this.setState({timeLineComponents: timeLine});
     }
+
 
     render() {
         return (
