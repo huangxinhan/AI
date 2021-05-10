@@ -298,6 +298,7 @@ class Main extends Component {
             });
 
             this.state.activities.push(activity);
+            this.setState({ activities_copy : this.state.activities })
             this.state.numOfTasks = this.state.numOfTasks + 1;
 
             document.getElementById("pythonInput").value = this.state.activities  //putting this in a document so python can read it
@@ -346,7 +347,61 @@ class Main extends Component {
         //1. make sure the schedule with more activites has higher score
         //2. make sure the schedule with more prefrenced value has higher score
         //3. add in the energy usage data to further calculate preference level/
-        
+        //activities_copy
+        for (i = 0; i < this.state.activities_copy.length; i++){
+            var month = this.state.activities_copy[i].date[0].substr(5,7)
+            month = parseInt(month)
+            var days = this.state.activities_copy[i].date[0].substr(8)
+            days = parseInt(days)
+            var nthDay = 0
+            if ( month  = 1 ){
+                nthDay = 0+days
+            }
+            else if ( month  = 2 ){
+                nthDay = 31+days
+            }
+            else if ( month  = 3 ){
+                nthDay = 59+days
+            }
+            else if ( month  = 4 ){
+                nthDay = 90+days
+            }
+            else if ( month  = 5 ){
+                nthDay = 120+days
+            }
+            else if ( month  = 6 ){
+                nthDay = 151+days
+            }
+            else if ( month  = 7 ){
+                nthDay = 181+days
+            }
+            else if ( month  = 8 ){
+                nthDay = 212+days
+            }
+            else if ( month  = 9 ){
+                nthDay = 233+days
+            }
+            else if ( month  = 10 ){
+                nthDay = 263+days
+            }
+            else if ( month  = 11 ){
+                nthDay = 294+days
+            }
+            else if ( month  = 12 ){
+                nthDay = 335+days
+            }
+
+            
+            console.log("days " + days)
+            console.log("nthday " + nthDay)
+            if (this.state.energyUse[nthDay-1] > this.state.average && this.state.activities_copy[i].electricity===true){
+                this.state.activities_copy[i].priority = parseInt(this.state.activities_copy[i].priority) - 1
+                
+            }            
+        }
+                
+
+
         for(var i = 0; i < generatedSchedules.length; i++){
             var tempScore = 0
             for(var j = 0; j < generatedSchedules[i].schedule.length;j++){
@@ -366,56 +421,6 @@ class Main extends Component {
             //  294
             //  324
             //  335
-
-                var month = generatedSchedules[i].schedule[j].date[0].substr(5,7)
-                month = parseInt(month)
-                var days = generatedSchedules[i].schedule[j].date[0].substr(8)
-                days = parseInt(days)
-                var nthDay = 0
-                if ( month  = 1 ){
-                    nthDay = 0+days
-                }
-                else if ( month  = 2 ){
-                    nthDay = 31+days
-                }
-                else if ( month  = 3 ){
-                    nthDay = 59+days
-                }
-                else if ( month  = 4 ){
-                    nthDay = 90+days
-                }
-                else if ( month  = 5 ){
-                    nthDay = 120+days
-                }
-                else if ( month  = 6 ){
-                    nthDay = 151+days
-                }
-                else if ( month  = 7 ){
-                    nthDay = 181+days
-                }
-                else if ( month  = 8 ){
-                    nthDay = 212+days
-                }
-                else if ( month  = 9 ){
-                    nthDay = 233+days
-                }
-                else if ( month  = 10 ){
-                    nthDay = 263+days
-                }
-                else if ( month  = 11 ){
-                    nthDay = 294+days
-                }
-                else if ( month  = 12 ){
-                    nthDay = 335+days
-                }
-
-                
-                console.log("days " + days)
-                console.log("nthday " + nthDay)
-                if (this.state.energyUse[nthDay-1] > this.state.average && generatedSchedules[i].schedule[j].electricity===true){
-                    generatedSchedules[i].schedule[j].priority = parseInt(generatedSchedules[i].schedule[j].priority) - 1
-                    //generatedSchedules[i].schedule[j].priority = parseInt(...)-1
-                }
                 tempScore += parseInt(generatedSchedules[i].schedule[j].priority)
             }
             generatedSchedules[i].objectiveFunctionScore = tempScore
