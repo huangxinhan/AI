@@ -256,12 +256,23 @@ class Main extends Component {
                 activity.date.push(new_date);
             }
             else if (activity.date[0].substr(-5) == "12-31") {
-                var year = activity.date[0].substr(0, 4); //20xx
+                var year = activity.date[0].substr(0, 4); //20xx-23-23
                 var intYear = parseInt(year);
                 intYear += 1;
                 var yearString = intYear.toString();
                 var yearStringWithHyphen = yearString + "-"
                 var new_date = yearStringWithHyphen + "01-01";
+                activity.date.push(new_date);
+            }
+            else{
+                var year = activity.date[0].substr(0, 5);
+                var month = activity.date[0].substr(5,7);
+                var endDate = activity.date[0].substr(-2);
+                var endDateInt = parseInt(endDate);
+                endDateInt = endDateInt  + 1;
+                var endDateString = endDateInt.toString(); 
+                var monthSub = month.substr(0,3)
+                var new_date = year + monthSub + endDateString;
                 activity.date.push(new_date);
             }
         }
