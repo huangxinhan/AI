@@ -324,11 +324,20 @@ class Main extends Component {
             generatedScheduleObject.objectiveFunctionScore = 0;
             this.state.generatedSchedules.push(generatedScheduleObject);
         }
+        setTimeout(this.afterGenerateSchedules, 1000);
+        // this.clearAllActivities1();
+        // this.objectiveFunction(this.state.generatedSchedules);
+        // console.log("generated schedules " +this.state.generatedSchedules)
+        // this.setState({forceReset: null})
+    }
+
+    afterGenerateSchedules = () => {
         this.clearAllActivities1();
         this.objectiveFunction(this.state.generatedSchedules);
         console.log("generated schedules " +this.state.generatedSchedules)
         this.setState({forceReset: null})
     }
+
 
     objectiveFunction = (generatedSchedules) => {
         //higher the objective function, further up the list ex. objective function score of 100 -> 1st rank
@@ -360,7 +369,7 @@ class Main extends Component {
 
                 var month = generatedSchedules[i].schedule[j].date[0].substr(5,7)
                 month = parseInt(month)
-                var days = generatedSchedules[i].schedule[j].date[0].substr(7)
+                var days = generatedSchedules[i].schedule[j].date[0].substr(8)
                 days = parseInt(days)
                 var nthDay = 0
                 if ( month  = 1 ){
@@ -401,22 +410,22 @@ class Main extends Component {
                 }
 
                 
-
-                
+                console.log("days " + days)
+                console.log("nthday " + nthDay)
                 if (this.state.energyUse[nthDay-1] > this.state.average && generatedSchedules[i].schedule[j].electricity===true){
-                    generatedSchedules[i].schedule[j].priority -= 1
-
+                    generatedSchedules[i].schedule[j].priority = parseInt(generatedSchedules[i].schedule[j].priority) - 1
+                    //generatedSchedules[i].schedule[j].priority = parseInt(...)-1
                 }
-                tempScore += generatedSchedules[i].schedule[j].priority
+                tempScore += parseInt(generatedSchedules[i].schedule[j].priority)
             }
             generatedSchedules[i].objectiveFunctionScore = tempScore
         }
-
+        
         // list.sort((a, b) => (a.color > b.color) ? 1 : -1)
-        this.setState({generatedSchedules: this.state.generateSchedules.sort((a,b) => (a.objectiveFunctionScore > b.objectiveFunctionScore) ? 1 : -1)})
-        console.log("hiiii"+ this.state.generatedSchedules)
-
-
+        this.setState({generatedSchedules: this.state.generatedSchedules.sort((a,b) => (a.objectiveFunctionScore < b.objectiveFunctionScore) ? 1 : -1)})
+        for ( var i = 0; i < this.state.generatedSchedules.length; i++){
+            console.log("objective function score " + this.state.generatedSchedules[i].objectiveFunctionScore);
+        }
     }
 
     getScheduleContent = () => {
@@ -424,7 +433,8 @@ class Main extends Component {
         var totalOptions =  [];
         console.log("generated schedules " +this.state.generatedSchedules)
         for (var i = 0; i < this.state.generatedSchedules.length; i++){
-            totalOptions.push(i)
+            totalOptions.push(this.state.generatedSchedules[i])
+            console.log("outputted generated schedules score:" + this.state.generatedSchedules[i].objectiveFunctionScore)
         }
         console.log(totalOptions);
         return                     <NativeSelect
@@ -434,9 +444,9 @@ class Main extends Component {
             id: 'state-native-helper schedule',
         }}>
             <option aria-label="None" value="">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</option>
-        {totalOptions.map((schedules, id) => {
+        {totalOptions.map((schedules) => {
             return(
-            <option value={id}>{"Schedule Number " + (id+1)}</option>)
+            <option value={schedules.id}>{"Schedule Number " + (schedules.id+1) + " Objective Function Score: " + schedules.objectiveFunctionScore}</option>)
         })}
     </NativeSelect>
     }
